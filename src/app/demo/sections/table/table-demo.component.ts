@@ -24,7 +24,7 @@ export class TableDemoComponent {
   private i18n = inject(I18nService);
 
   actions = computed<TableAction<AdicionalRow>[]>(() => [
-    { kind: 'edit', ariaLabel: this.i18n.t('table.action.edit'), iconUrl: '/icons/svg/pen-box.svg' }
+    { kind: 'edit', ariaLabel: this.i18n.t('table.action.edit'), iconUrl: 'icons/svg/pen-box.svg' }
   ]);
 
   rows: AdicionalRow[] = [

@@ -21,7 +21,7 @@
         [attr.aria-label]="i18n.lang() === 'pt' ? ('header.lang.tooltip'|t) : ('header.lang.tooltip'|t)"
       >
         <!-- use emoji de bandeira (simples) -->
-        <img [src]="i18n.lang()==='pt' ? '/icons/flags/br.svg' : '/icons/flags/us.svg'" width="18" height="18" alt="">
+        <img [src]="i18n.lang()==='pt' ? 'icons/flags/br.svg' : 'icons/flags/us.svg'" width="18" height="18" alt="">
 
         <!-- texto só para leitor de tela -->
         <span class="sr-only">{{ i18n.lang() === 'pt' ? ('header.lang.tooltip'|t) : ('header.lang.tooltip'|t) }}</span>
