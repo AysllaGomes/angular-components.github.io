@@ -1,5 +1,11 @@
 <p align="right"><a href="./README.pt-BR.md">Português (BR)</a></p>
 
+[![Deploy](https://github.com/AysllaGomes/angular-components.github.io/actions/workflows/deploy.yml/badge.svg)](.github/workflows/deploy.yml)
+### **[Demo](https://aysllagomes.github.io/angular-components.github.io/demo/)**
+
+- **[CHANGELOG.md](./CHANGELOG.md):**
+---
+
 # Angular Components (Standalone, HTML + Sass)
 
 > **Purpose:** build **reusable UI components** (e.g., Stepper, Table, Pagination, Toast) using **Angular Standalone** with plain **HTML + Sass**, **without UI frameworks**. Lightweight, accessible, and easy to extract/“decapsulate” when needed.
