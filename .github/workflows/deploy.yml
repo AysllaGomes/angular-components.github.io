@@ -3,26 +3,49 @@ name: deploy-gh-pages
 on:
   push:
     branches: [main]
+
 permissions:
   pages: write
   id-token: write
   contents: read
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
-        with: { node-version: 20 }
+        with:
+          node-version: 20
+
       - run: npm ci
+
+      # use o script do package.json (já com --base-href /angular-components/)
       - run: npm run build
-      - run: cp dist/angular-components/browser/index.html dist/angular-components/browser/404.html
+
+      # normaliza a saída SSR (index.csr.html -> index.html) e cria o fallback 404.html
+      - name: Normalize SSR index and create 404 fallback
+        run: |
+          B=dist/angular-components/browser
+          if [ ! -f "$B/index.html" ] && [ -f "$B/index.csr.html" ]; then
+            cp "$B/index.csr.html" "$B/index.html"
+          fi
+          cp "$B/index.html" "$B/404.html"
+
       - uses: actions/configure-pages@v5
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist/angular-components/browser
-      - id: deploy
+
+      - id: deployment
         uses: actions/deploy-pages@v4
