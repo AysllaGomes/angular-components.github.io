@@ -1,12 +1,14 @@
 {
   "name": "angular-components",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --base-href /angular-components/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "release": "standard-version",
+    "release:rc": "standard-version --prerelease rc",
     "serve:ssr:angular-components": "node dist/angular-components/server/server.mjs"
   },
   "prettier": {
@@ -50,6 +52,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "standard-version": "^9.5.0",
     "typescript": "~5.9.2"
   }
 }
