@@ -41,6 +41,19 @@ jobs:
           fi
           cp "$B/index.html" "$B/404.html"
 
+      - name: Make root redirect to /<repo>/demo/
+        run: |
+          B=dist/angular-components/browser
+          REPO=${{ github.event.repository.name }}
+          cat > "$B/index.html" <<EOF
+          <!doctype html><meta charset="utf-8">
+          <meta http-equiv="refresh" content="0; url=/$REPO/demo/">
+          <script>location.replace('/'+$REPO+'/demo/');</script>
+          <title>Redirecting…</title>
+          <p>Redirecting to <a href="/$REPO/demo/">/$REPO/demo/</a></p>
+          EOF
+          cp "$B/index.html" "$B/404.html"
+
       - uses: actions/configure-pages@v5
         with:
           enablement: enabled
