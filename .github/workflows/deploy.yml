@@ -42,6 +42,8 @@ jobs:
           cp "$B/index.html" "$B/404.html"
 
       - uses: actions/configure-pages@v5
+        with:
+          enablement: enabled
 
       - uses: actions/upload-pages-artifact@v3
         with:
