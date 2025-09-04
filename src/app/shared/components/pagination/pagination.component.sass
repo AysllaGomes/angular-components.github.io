@@ -1,0 +1,41 @@
+:host
+  /* tokens (herdam da tabela quando existir) */
+  --pg-active-bg: var(--tbl-action, #058075)
+  --pg-active-fg: #ffffff
+  --pg-page-bg: #eef6f4          /* bolhas “inativas” */
+  --pg-ghost-bg: #eeeeee          /* setas */
+  --pg-hover: color-mix(in oklab, var(--pg-active-bg) 12%, white)
+  --pg-fg: #0f1720
+
+.pager
+  display: inline-flex
+  align-items: center
+  gap: .5rem
+
+.page-btn
+  appearance: none
+  -webkit-appearance: none
+  border: 0
+  width: 32px
+  height: 32px
+  display: grid
+  place-items: center
+  border-radius: 9999px
+  cursor: pointer
+  font-weight: 600
+  background: var(--pg-page-bg)
+  color: var(--pg-fg)
+
+  &:hover
+    background: var(--pg-hover)
+
+  &.is-active
+    background: var(--pg-active-bg)
+    color: var(--pg-active-fg)
+
+  &.is-disabled
+    opacity: .45
+    pointer-events: none
+
+.page-btn--ghost
+  background: var(--pg-ghost-bg)

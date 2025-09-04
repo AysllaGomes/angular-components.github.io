@@ -1,0 +1,49 @@
+<section id="table" class="demo-section">
+  <h2>{{ 'section.table.title' | t }}</h2>
+  <p class="lead">{{ 'section.table.lead' | t }}</p>
+
+  <article class="card">
+    <div class="toolbar">
+      <button class="pill" type="button"
+              (click)="simulateLoad()"
+              [disabled]="loading()">
+        {{ loading() ? ('table.toolbar.simulate.loading' | t)
+        : ('table.toolbar.simulate' | t) }}
+      </button>
+
+      <button class="pill" type="button" (click)="toggleEmpty()">
+        {{ empty()
+        ? ('table.toolbar.toggleEmpty.hide' | t)
+        : ('table.toolbar.toggleEmpty.show' | t) }}
+      </button>
+    </div>
+
+    <app-table
+      [columns]="columns"
+      [data]="pagedRows()"
+      [loading]="loading()"
+      [loadingRows]="pageSize"
+      [emptyMessage]="'table.empty' | t"
+      [selectable]="true"
+      [actions]="actions()"
+      [showActions]="true"
+      [selected]="selected()"
+      [sortKey]="sort()?.key || undefined"
+      [sortDir]="sort()?.dir || 'asc'"
+      (sortChange)="onSort($event)"
+      (selectedChange)="selected.set($event)"
+      (action)="onAction($event)">
+    </app-table>
+
+    <div class="tbl-footer" *ngIf="rows.length > pageSize">
+      <span class="total">{{ 'table.total' | t:{ n: rows.length } }}</span>
+
+      <app-pagination
+        [total]="rows.length"
+        [pageSize]="pageSize"
+        [pageIndex]="pageIndex()"
+        (pageChange)="pageIndex.set($event)">
+      </app-pagination>
+    </div>
+  </article>
+</section>

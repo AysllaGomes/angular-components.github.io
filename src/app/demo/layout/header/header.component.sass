@@ -1,0 +1,126 @@
+/* acessibilidade: texto só para leitor de tela */
+.sr-only
+  position: absolute !important
+  height: 1px
+  width: 1px
+  overflow: hidden
+  clip: rect(1px, 1px, 1px, 1px)
+  white-space: nowrap
+
+.actions
+  display: flex
+  gap: 8px
+
+/* botão circular com ícone */
+.icon-pill
+  appearance: none
+  -webkit-appearance: none
+  border: 1px solid var(--hdr-pill-border)
+  background: var(--hdr-pill-bg)
+  color: var(--hdr-pill-color)
+  width: 36px
+  height: 36px
+  border-radius: 9999px
+  display: inline-grid
+  place-items: center
+  cursor: pointer
+  padding: 0
+  line-height: 0
+
+  &:hover
+    background: var(--hdr-link-hover)
+
+  /* tamanhos internos */
+  .flag
+    font-size: 18px
+    line-height: 1
+
+  svg, img
+    width: 18px
+    height: 18px
+    display: block
+
+.skip-link
+  position: absolute
+  left: -9999px
+  top: auto
+  width: 1px
+  height: 1px
+  overflow: hidden
+  &:focus
+    position: fixed
+    left: 16px
+    top: 16px
+    width: auto
+    height: auto
+    background: #111827
+    color: #fff
+    padding: .5rem .75rem
+    border-radius: .5rem
+    z-index: 999
+
+.demo-header
+  position: sticky
+  top: 0
+  z-index: 50
+  border-bottom: 1px solid var(--hdr-border)
+  background: var(--hdr-bg)
+  backdrop-filter: saturate(180%) blur(8px)
+
+.hdr
+  display: grid
+  align-items: center
+  gap: 16px
+  min-height: 56px
+  padding: 8px 0
+  grid-template-columns: auto 1fr auto
+
+.brand
+  font-weight: 800
+  text-decoration: none
+  color: var(--hdr-link)
+
+.nav
+  display: flex
+  gap: 12px
+  flex-wrap: wrap
+  justify-content: center
+  min-width: 0
+  a
+    color: var(--hdr-link)
+    text-decoration: none
+    padding: 6px 8px
+    border-radius: 8px
+    &:hover
+      background: var(--hdr-link-hover)
+
+.actions
+  display: flex
+  gap: 8px
+  min-width: max-content    /* impede colapsar pra 0px */
+  justify-self: end
+  white-space: nowrap       /* mantém os 2 botões na mesma linha */
+
+.pill
+  appearance: none
+  border: 1px solid var(--hdr-pill-border)
+  background: var(--hdr-pill-bg)
+  color: var(--hdr-pill-color)
+  padding: 6px 10px
+  border-radius: 9999px
+  font-weight: 600
+  cursor: pointer
+
+@media (max-width: 840px)
+  .hdr
+    grid-template-columns: auto 1fr
+    grid-template-areas: 'brand actions' 'nav nav'
+    row-gap: 8px
+  .brand
+    grid-area: brand
+  .nav
+    grid-area: nav
+    justify-content: flex-start
+  .actions
+    grid-area: actions
+    justify-content: flex-end

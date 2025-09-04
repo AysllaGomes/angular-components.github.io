@@ -1,0 +1,45 @@
+<section id="stepper" class="demo-section">
+  <h2>{{ 'section.stepper.title' | t }}</h2>
+  <p class="lead">{{ 'section.stepper.lead' | t }}</p>
+
+  <article class="card">
+    <h3>{{ 'stepper.demo.basic.title' | t }}</h3>
+    <app-stepper
+      [steps]="steps()"
+      [current]="current()"
+      [clickable]="true"
+      (stepChange)="goTo($event)">
+    </app-stepper>
+
+    <div class="actions">
+      <button type="button" (click)="prev()" [disabled]="current() === 0">
+        {{ 'stepper.demo.basic.prev' | t }}
+      </button>
+      <button type="button" (click)="next()" [disabled]="current() === steps.length - 1">
+        {{ 'stepper.demo.basic.next' | t }}
+      </button>
+    </div>
+  </article>
+
+  <article class="card">
+    <h3>{{ 'stepper.demo.disabled.title' | t }}</h3>
+    <app-stepper
+      [steps]="stepsDisabled"
+      [current]="current2()"
+      [clickable]="true"
+      (stepChange)="current2.set($event)"></app-stepper>
+  </article>
+
+  <article class="card">
+    <h3>{{ 'stepper.demo.compact.title' | t }}</h3>
+    <div class="compact">
+      <app-stepper
+        [steps]="steps()"
+        [current]="current()"
+        [clickable]="true"
+        (stepChange)="goTo($event)">
+      </app-stepper>
+    </div>
+    <small>{{ 'stepper.demo.compact.note' | t }}</small>
+  </article>
+</section>

@@ -1,0 +1,148 @@
+button
+  border: none !important
+  background: transparent
+
+.tbl
+  width: 100%
+  border-collapse: separate
+  border-spacing: 0
+  color: var(--tbl-fg)
+
+  thead th
+    position: sticky
+    top: 0
+    background: var(--tbl-header-bg)
+    color: var(--tbl-header-fg)
+    text-align: left
+    font-weight: 600
+    padding: 12px 14px
+    white-space: nowrap
+
+  tbody td
+    padding: 12px 14px
+    border-bottom: 1px solid var(--tbl-row-border)
+    background: var(--tbl-row-gray-medium)
+
+  tbody tr:nth-child(even) td
+    background: var(--tbl-row-bg)
+
+  .col-select, .col-actions
+    width: 48px
+    text-align: center
+
+  .align-center
+    text-align: center
+  .align-right
+    text-align: right
+
+/* checkbox básico */
+input[type="checkbox"]
+  width: 16px
+  height: 16px
+  accent-color: var(--chip-teal-border)
+
+/* chips */
+.chip
+  display: inline-flex
+  align-items: center
+  justify-content: center
+  height: var(--chip-h)
+  padding: 0 var(--chip-pad-x)
+  border-radius: var(--chip-radius)
+  font-size: var(--chip-fs)
+  border: 1px solid var(--tbl-row-border)
+  color: var(--tbl-muted)
+  background: #fff
+
+/* variantes */
+.chip--teal
+  border-color: var(--chip-teal-border)
+  color: var(--chip-teal-fg)
+  background: var(--chip-teal-bg)
+
+.chip--orange
+  border-color: var(--chip-orange-border)
+  color: var(--chip-orange-fg)
+  background: var(--chip-orange-bg)
+
+.action-list
+  display: inline-flex
+  gap: .25rem
+
+/* base do botão de ação */
+.icon-btn
+  /* zera UI nativa */
+  appearance: none
+  -webkit-appearance: none
+  box-shadow: none
+  padding: 0
+
+  /* layout */
+  width: 32px
+  height: 32px
+  display: inline-grid
+  place-items: center
+  border-radius: .5rem
+  cursor: pointer
+  color: var(--tbl-action, #058075)
+
+  svg, img
+    width: 24px
+    height: 24px
+    display: block
+
+/* variação sem fundo/borda (ghost) */
+.icon-btn--ghost
+  &:hover
+    background: color-mix(in oklab, var(--tbl-action, #058075) 12%, transparent)
+  &:focus-visible
+    outline: 2px solid color-mix(in oklab, var(--tbl-action, #058075) 40%, white)
+    outline-offset: 2px
+
+/* Firefox tem um padding/borda interno no botão por padrão */
+.icon-btn::-moz-focus-inner
+  border: 0
+  padding: 0
+
+@keyframes skPulse
+  0%
+    opacity: .6
+  50%
+    opacity: 1
+  100%
+    opacity: .6
+
+.sk
+  display: inline-block
+  background: #e5e7eb
+  border-radius: .375rem
+  animation: skPulse 1.2s ease-in-out infinite
+
+.sk--line
+  height: 14px
+  width: 60%
+  max-width: 240px
+  display: inline-block
+
+.sk--circle
+  width: 16px
+  height: 16px
+  border-radius: 9999px
+  display: inline-block
+
+td.empty
+  text-align: center
+  color: var(--tbl-muted)
+  padding: 24px 14px
+
+.tbl thead th[role="button"]
+  cursor: pointer
+  user-select: none
+  &:focus-visible
+    outline: 2px solid color-mix(in oklab, var(--tbl-action, #058075) 40%, white)
+    outline-offset: 2px
+
+.tbl thead .sort
+  margin-left: .25rem
+  font-size: .8em
+  opacity: .75

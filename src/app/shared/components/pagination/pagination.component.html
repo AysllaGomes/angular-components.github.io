@@ -1,0 +1,26 @@
+<nav class="pager" aria-label="Paginação" *ngIf="pageCount > 1">
+  <button class="page-btn page-btn--ghost"
+          type="button"
+          [class.is-disabled]="!canPrev"
+          [attr.aria-disabled]="!canPrev || null"
+          (click)="prev()" aria-label="Página anterior">
+    ‹
+  </button>
+
+  <button *ngFor="let p of pages()"
+          class="page-btn"
+          type="button"
+          [class.is-active]="p === pageIndex"
+          [attr.aria-current]="p === pageIndex ? 'page' : null"
+          (click)="goTo(p)">
+    {{ p + 1 }}
+  </button>
+
+  <button class="page-btn page-btn--ghost"
+          type="button"
+          [class.is-disabled]="!canNext"
+          [attr.aria-disabled]="!canNext || null"
+          (click)="next()" aria-label="Próxima página">
+    ›
+  </button>
+</nav>

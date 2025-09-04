@@ -1,0 +1,153 @@
+<table class="tbl">
+  <thead>
+    <tr>
+      <th *ngIf="selectable" class="col-select">
+        <input
+          type="checkbox"
+          [checked]="allSelected"
+          [indeterminate]="selected.length>0 && selected.length<data.length"
+          (change)="toggleAll($any($event.target).checked)"
+          aria-label="Selecionar tudo">
+      </th>
+
+      <!-- use um ng-container para o *ngFor -->
+      <ng-container *ngFor="let col of columns; trackBy: trackByCol">
+        <th
+          (click)="onHeaderClick(col)"
+          (keydown.enter)="onHeaderClick(col)"
+          (keydown.space)="onHeaderClick(col)"
+          tabindex="0" role="button"
+          [style.width]="col.width || null"
+          [class.align-center]="col.align==='center'"
+          [class.align-right]="col.align==='right'"
+          [attr.aria-sort]="sortKey===col.key ? (sortDir==='asc'?'ascending':'descending') : 'none'">
+          {{ col.header }}
+          <span class="sort" [attr.title]="'Clique para ordenar'" *ngIf="sortKey===col.key">{{ sortDir==='asc' ? '▲' : '▼' }}</span>
+        </th>
+      </ng-container>
+
+      <th *ngIf="hasActions" class="col-actions"></th>
+    </tr>
+  </thead>
+
+
+  <!-- DADOS -->
+  <tbody *ngIf="!loading && data.length > 0; else bodyEmptyOrLoading">
+    <tr *ngFor="let row of data; index as i; trackBy: trackByIndex">
+      <td *ngIf="selectable" class="col-select">
+        <input type="checkbox"
+               [checked]="isSelected(i)"
+               (change)="toggleRow(i, $any($event.target).checked)"
+               aria-label="Selecionar linha">
+      </td>
+
+      <td *ngFor="let col of columns"
+          [class.align-center]="col.align==='center'"
+          [class.align-right]="col.align==='right'">
+
+        <ng-container [ngSwitch]="col.type || 'text'">
+
+          <!-- CHIP -->
+          <span *ngSwitchCase="'chip'"
+                [class]="chipClass(col, $any(row)[$any(col).key])">
+            {{ chipLabel(col, $any(row)[$any(col).key]) }}
+          </span>
+
+          <!-- CUSTOM -->
+          <ng-container *ngSwitchCase="'custom'">
+            <ng-container
+              *ngIf="getTemplate(String(col.key)) as tpl; else defaultText"
+              [ngTemplateOutlet]="tpl"
+              [ngTemplateOutletContext]="{
+                $implicit: $any(row)[$any(col).key],
+                row: row,
+                value: $any(row)[$any(col).key],
+                index: i
+              }">
+            </ng-container>
+            <ng-template #defaultText>{{ $any(row)[$any(col).key] }}</ng-template>
+          </ng-container>
+
+          <!-- TEXT -->
+          <ng-container *ngSwitchDefault>
+            {{ $any(row)[$any(col).key] }}
+          </ng-container>
+
+        </ng-container>
+      </td>
+
+      <!-- AÇÕES -->
+      <td *ngIf="hasActions" class="col-actions">
+
+        <!-- 1) Se o consumidor passar <ng-template appActions>, usamos ele -->
+        <ng-container *ngIf="actionsTpl?.tpl; else autoActions"
+                      [ngTemplateOutlet]="actionsTpl?.tpl"
+                      [ngTemplateOutletContext]="{ row: row, index: i }">
+        </ng-container>
+
+        <!-- 2) Senão, renderizamos automaticamente a lista [actions] -->
+        <ng-template #autoActions>
+          <div class="action-list">
+            <button
+              *ngFor="let a of normalizedActions"
+              class="icon-btn icon-btn--ghost"
+              type="button"
+              [attr.aria-label]="a.ariaLabel || a.label || a.kind"
+              [disabled]="isActionDisabled(a, row, i)"
+              (click)="emitAction(a.kind, row, i)"
+              [style.color]="null">
+
+              <!-- Se você preferir usar assets externos -->
+              <img *ngIf="a.iconUrl" [src]="a.iconUrl" alt="" />
+
+              <!-- Ícones inline (herdam currentColor) -->
+              <ng-container *ngIf="!a.iconUrl" [ngSwitch]="a.kind">
+                <!-- EDIT -->
+                <svg *ngSwitchCase="'edit'" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 000-1.42l-2.34-2.34a1.003 1.003 0 00-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z" fill="currentColor"/>
+                </svg>
+
+                <!-- DELETE -->
+                <svg *ngSwitchCase="'delete'" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M6 7h12l-1 13H7L6 7zm3-3h6l1 2H8l1-2z" fill="currentColor"/>
+                </svg>
+
+                <!-- VIEW -->
+                <svg *ngSwitchCase="'view'" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 5c5 0 9 4.5 9 7s-4 7-9 7-9-4.5-9-7 4-7 9-7zm0 3a4 4 0 100 8 4 4 0 000-8z" fill="currentColor"/>
+                </svg>
+
+                <!-- DOWNLOAD -->
+                <svg *ngSwitchCase="'download'" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 3v10l4-4 1.4 1.4L12 17.8 6.6 10.4 8 9l4 4V3h0zM5 19h14v2H5z" fill="currentColor"/>
+                </svg>
+              </ng-container>
+            </button>
+          </div>
+        </ng-template>
+      </td>
+    </tr>
+  </tbody>
+
+  <!-- EMPTY / LOADING -->
+  <ng-template #bodyEmptyOrLoading>
+    <!-- skeletons -->
+    <tbody *ngIf="loading">
+    <tr *ngFor="let _ of skeletonArray; let r = index">
+      <td *ngIf="selectable" class="col-select"><span class="sk sk--circle"></span></td>
+      <td *ngFor="let col of columns"><span class="sk sk--line"></span></td>
+      <td *ngIf="hasActions" class="col-actions"><span class="sk sk--circle"></span></td>
+    </tr>
+    </tbody>
+
+    <!-- vazio -->
+    <tbody *ngIf="!loading && data.length === 0">
+    <tr>
+      <td class="empty"
+          [attr.colspan]="columns.length + (selectable?1:0) + (hasActions?1:0)">
+        {{ emptyMessage }}
+      </td>
+    </tr>
+    </tbody>
+  </ng-template>
+</table>

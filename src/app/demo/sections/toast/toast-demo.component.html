@@ -1,0 +1,16 @@
+<section id="toast" class="demo-section">
+  <h2>{{ 'section.toast.title' | t }}</h2>
+  <p class="lead">{{ 'section.toast.lead' | t }}</p>
+
+  <article class="card">
+    <div class="toast-toolbar">
+      <button class="btn btn--success" (click)="ok()">{{ 'toast.btn.success' | t }}</button>
+      <button class="btn btn--error"   (click)="fail()">{{ 'toast.btn.error'   | t }}</button>
+      <button class="btn btn--info"    (click)="info()">{{ 'toast.btn.info'    | t }}</button>
+      <button class="btn btn--warn"    (click)="warn()">{{ 'toast.btn.warn'    | t }}</button>
+      <button class="btn btn--ghost"   (click)="withAction()">{{ 'toast.btn.ghost' | t }}</button>
+      <button class="btn" (click)="many()">{{ 'toast.btn.many' | t }}</button>
+      <button class="btn" (click)="sticky()">{{ 'toast.btn.sticky' | t }}</button>
+    </div>
+  </article>
+</section>

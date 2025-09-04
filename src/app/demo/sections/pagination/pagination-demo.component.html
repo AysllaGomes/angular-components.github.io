@@ -1,0 +1,30 @@
+<section id="pagination" class="demo-section">
+  <h2>{{ 'section.pagination.title' | t }}</h2>
+  <p class="lead">{{ 'section.pagination.lead' | t }}</p>
+
+  <article class="card">
+    <div class="row" style="display:flex; gap:1rem; align-items:center; justify-content:space-between;">
+      <div class="muted">{{ 'pagination.range' | t:{ start: start(), end: end(), total: total() } }}</div>
+
+      <label style="display:inline-flex; gap:.5rem; align-items:center;">
+        {{ 'pagination.itemsPerPage' | t }}
+        <select [value]="pageSize()" (change)="onPageSizeChange(+$any($event.target).value)">
+          <option [value]="5">5</option>
+          <option [value]="10">10</option>
+          <option [value]="20">20</option>
+        </select>
+      </label>
+    </div>
+
+    <div style="margin-top:.75rem; display:flex; justify-content:flex-end;">
+      <app-pagination
+        *ngIf="total() > pageSize()"
+        [total]="total()"
+        [pageSize]="pageSize()"
+        [pageIndex]="pageIndex()"
+        [maxVisible]="5"
+        (pageChange)="pageIndex.set($event)">
+      </app-pagination>
+    </div>
+  </article>
+</section>

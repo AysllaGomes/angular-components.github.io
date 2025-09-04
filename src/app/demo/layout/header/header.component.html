@@ -1,0 +1,52 @@
+<a class="skip-link" href="#main">Pular para o conteúdo</a>
+
+<header class="demo-header">
+  <div class="container hdr">
+    <a class="brand" href="#top">{{ 'brand' | t }}</a>
+
+    <nav class="nav" aria-label="Seções da demo">
+      <a href="#stepper">{{ 'nav.stepper' | t }}</a>
+      <a href="#table">{{ 'nav.table' | t }}</a>
+      <a href="#pagination">{{ 'nav.pagination' | t }}</a>
+      <a href="#toast">{{ 'nav.toast' | t }}</a>
+    </nav>
+
+    <div class="actions">
+      <!-- Trocar idioma -->
+      <button
+        class="icon-pill"
+        type="button"
+        (click)="toggleLang()"
+        [attr.title]="i18n.lang() === 'pt' ? ('header.lang.tooltip'|t) : ('header.lang.tooltip'|t)"
+        [attr.aria-label]="i18n.lang() === 'pt' ? ('header.lang.tooltip'|t) : ('header.lang.tooltip'|t)"
+      >
+        <!-- use emoji de bandeira (simples) -->
+        <img [src]="i18n.lang()==='pt' ? 'icons/flags/br.svg' : 'icons/flags/us.svg'" width="18" height="18" alt="">
+
+        <!-- texto só para leitor de tela -->
+        <span class="sr-only">{{ i18n.lang() === 'pt' ? ('header.lang.tooltip'|t) : ('header.lang.tooltip'|t) }}</span>
+      </button>
+
+      <!-- Trocar tema -->
+      <button
+        class="icon-pill"
+        type="button"
+        (click)="toggleTheme()"
+        [attr.title]="theme.theme() === 'light' ? ('button.theme.light'|t) : ('button.theme.dark'|t)"
+        [attr.aria-label]="theme.theme() === 'light' ? ('button.theme.light'|t) : ('button.theme.dark'|t)"
+        [attr.aria-pressed]="theme.theme() === 'dark'"
+      >
+        <!-- sol/lua inline (herdam currentColor) -->
+        <svg *ngIf="theme.theme() === 'light'" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.8 1.42-1.42zM1 13h3v-2H1v2zm10-9h-2v3h2V4zm7.04.46l-1.41-1.41-1.8 1.79 1.41 1.41 1.8-1.79zM20 11v2h3v-2h-3zm-9 9h2v-3h-2v3zm6.24-1.84l1.8 1.79 1.41-1.41-1.79-1.8-1.42 1.42zM4.22 17.66l1.8-1.79-1.42-1.42-1.79 1.8 1.41 1.41zM12 8a4 4 0 100 8 4 4 0 000-8z" fill="currentColor"/>
+        </svg>
+        <svg *ngIf="theme.theme() === 'dark'" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2a9.99 9.99 0 00-8.94 5.5A10 10 0 0012 22a9.99 9.99 0 008.94-5.5A10 10 0 0112 2zm0 18a8 8 0 01-6.93-12A9 9 0 0012 20z" fill="currentColor"/>
+        </svg>
+        <span class="sr-only">
+          {{ theme.theme() === 'light' ? ('button.theme.light'|t) : ('button.theme.dark'|t) }}
+        </span>
+      </button>
+    </div>
+  </div>
+</header>

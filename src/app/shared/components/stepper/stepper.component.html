@@ -1,0 +1,33 @@
+<nav class="stepper" [attr.aria-valuenow]="current + 1" [attr.aria-valuemax]="steps.length">
+  <ol class="stepper-list">
+    <li
+      *ngFor="let step of steps; index as i; trackBy: trackByIndex"
+      class="stepper-item"
+      [class.is-active]="getState(i) === 'active'"
+      [class.is-done]="getState(i) === 'done'"
+      [class.is-disabled]="getState(i) === 'disabled'"
+    >
+      <button
+        class="stepper-button"
+        type="button"
+        role="tab"
+        [attr.aria-selected]="getState(i) === 'active'"
+        [attr.aria-disabled]="!canClick(i)"
+        [disabled]="!canClick(i)"
+        (click)="onStepClick(i)"
+      >
+        <span class="bullet" aria-hidden="true">
+          <span class="check" *ngIf="getState(i) === 'done'">✓</span>
+          <span class="index" *ngIf="showIndex && getState(i) !== 'done'">{{ i + 1 }}</span>
+        </span>
+
+        <span class="texts">
+          <span class="label">{{ step.label }}</span>
+          <span class="caption" *ngIf="showCaption && step.caption">{{ step.caption }}</span>
+        </span>
+      </button>
+
+      <span class="connector" *ngIf="i < steps.length - 1" aria-hidden="true"></span>
+    </li>
+  </ol>
+</nav>

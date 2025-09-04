@@ -1,0 +1,83 @@
+:host
+  position: fixed
+  display: flex
+  justify-content: flex-end
+  right: 16px
+  z-index: 9999
+
+.toast-stack
+  display: grid
+  gap: .75rem
+  pointer-events: none
+
+.toast
+  pointer-events: auto
+  display: grid
+  grid-template-columns: auto 1fr auto auto
+  align-items: center
+  gap: .5rem  .75rem
+  min-width: 280px
+  max-width: 420px
+  padding: .75rem 1rem
+  border-radius: var(--toast-radius, .75rem)
+  border: 1px solid var(--toast-border, #d1d5db)
+  background: var(--toast-bg, #ffffff)
+  color: var(--toast-fg, #0f1720)
+  box-shadow: var(--toast-shadow, 0 6px 20px rgba(0,0,0,.12))
+  transform: translateY(6px)
+  opacity: 0
+  animation: toastIn .18s ease-out forwards
+
+.icon
+  line-height: 0
+
+.msg
+  margin-right: .5rem
+
+.toast-action
+  appearance: none
+  border: 0
+  background: transparent
+  color: var(--toast-accent, #0a7cff)
+  font-weight: 600
+  cursor: pointer
+
+.toast-close
+  appearance: none
+  border: 0
+  background: transparent
+  font-size: 18px
+  line-height: 1
+  opacity: .7
+  cursor: pointer
+  &:hover
+    opacity: 1
+
+.toast--success
+  --toast-bg: #ecfdf5
+  --toast-border: #86efac
+  --toast-fg: #065f46
+  --toast-accent: #059669
+
+.toast--error
+  --toast-bg: #fee2e2
+  --toast-border: #fca5a5
+  --toast-fg: #7f1d1d
+  --toast-accent: #dc2626
+
+.toast--info
+  --toast-bg: #eff6ff
+  --toast-border: #93c5fd
+  --toast-fg: #1e3a8a
+  --toast-accent: #2563eb
+
+.toast--warning
+  --toast-bg: #fff7ed
+  --toast-border: #fdba74
+  --toast-fg: #7c2d12
+  --toast-accent: #ea580c
+
+@keyframes toastIn
+  to
+    transform: translateY(0)
+    opacity: 1
